@@ -18,7 +18,9 @@
             <a-cursor></a-cursor>
         </a-entity>
 
-        <a-entity gltf-model="#moon-model" scale="0.1 0.1 0.1" rotation="50 180 50"></a-entity> <!-- Rotación del modelo -->
+        <a-entity gltf-model="#moon-model" scale="0.1 0.1 0.1" rotation="50 180 50">
+            <a-animation attribute="rotation" to="0 360 0" dur="10000" easing="linear" repeat="indefinite"></a-animation>
+        </a-entity> <!-- Rotación del modelo -->
     </a-scene>
 </body>
 </html>
