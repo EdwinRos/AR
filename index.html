@@ -1,13 +1,57 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Modelo 3D de la Luna</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo 3D en Realidad Aumentada</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.132.1/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.132.1/examples/js/loaders/DRACOLoader.js"></script>
+    <script src="https://unpkg.com/three@0.132.1/examples/js/WebXR.js"></script>
 </head>
-
 <body>
-    <h1>Modelo 3D de la Luna</h1>
-    <model-viewer src="moon.glb" alt="Modelo 3D de la Luna"></model-viewer>
-</body>
+    <button id="start-ar-button">Iniciar Realidad Aumentada</button>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(window.innerWidth, window.innerHeight);
 
+        const loader = new THREE.GLTFLoader();
+        loader.load('moon.glb', function (gltf) {
+            const model = gltf.scene;
+            scene.add(model);
+        });
+
+        const xrButton = document.getElementById('start-ar-button');
+        xrButton.addEventListener('click', () => {
+            if (navigator.xr) {
+                navigator.xr.requestSession('immersive-ar').then((session) => {
+                    session.updateRenderState({ baseLayer: new XRWebGLLayer(session, renderer) });
+                    session.requestReferenceSpace('local').then((referenceSpace) => {
+                        const xrButton = document.getElementById('start-ar-button');
+                        xrButton.remove();
+
+                        session.requestAnimationFrame(onXRFrame);
+
+                        function onXRFrame(t, frame) {
+                            const pose = frame.getViewerPose(referenceSpace);
+
+                            if (pose) {
+                                const view = pose.views[0];
+                                const viewport = session.renderState.baseLayer.getViewport(view);
+                                renderer.setSize(viewport.width, viewport.height);
+                            }
+
+                            renderer.render(scene, camera);
+                            session.requestAnimationFrame(onXRFrame);
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
 </html>
