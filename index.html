@@ -20,7 +20,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         const loader = new THREE.GLTFLoader();
-        loader.load('moon.glb', function (gltf) {
+        loader.load('./moon.glb', function (gltf) {
             const model = gltf.scene;
             scene.add(model);
         });
