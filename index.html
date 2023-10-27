@@ -10,14 +10,14 @@
 
 <body>
     <a-scene embedded arjs="sourceType: webcam; trackingMethod: best;">
-        <!-- Marcador QR -->
-        <a-marker preset="hiro">
-            <!-- Modelo 3D de la Tierra -->
-            <a-entity gltf-model="https://github.com/EdwinRos/AR/raw/main/earth.glb" scale="1 1 1"></a-entity>
-
+        <!-- Marcador personalizado transparente -->
+        <a-marker preset="custom">
+            <!-- Contenido de AR -->
+            <a-entity gltf-model="https://github.com/EdwinRos/AR/main/earth.glb" scale="1 1 1"></a-entity>
         </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
 </body>
 
 </html>
+
