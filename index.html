@@ -12,12 +12,12 @@
     <a-scene embedded arjs="sourceType: webcam; trackingMethod: best;">
         <!-- Marcador personalizado transparente -->
         <a-marker preset="custom">
-            <!-- Contenido de AR -->
-            <a-entity gltf-model="https://github.com/EdwinRos/AR/main/earth.glb" scale="1 1 1"></a-entity>
+            <!-- Contenido de AR con escala más pequeña -->
+            <a-entity gltf-model="https://edwinros.github.io/AR/earth.glb" scale="0.3 0.3 0.3"></a-entity>
         </a-marker>
-        <a-entity camera></a-entity>
+        <!-- Configuración de la cámara con posición alejada -->
+        <a-entity camera position="0 1.6 -3"></a-entity>
     </a-scene>
 </body>
 
 </html>
-
